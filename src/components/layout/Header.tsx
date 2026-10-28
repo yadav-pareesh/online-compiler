@@ -19,6 +19,7 @@ interface HeaderProps {
   onSelectSnippet: (code: string) => void;
   isDark: boolean;
   onToggleTheme: () => void;
+  onAnalyzeComplexity?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectSnippet,
   isDark,
   onToggleTheme,
+  onAnalyzeComplexity,
 }) => {
   const currentLang = languageRegistry.getDefault();
   const isRunning = status === 'running';
@@ -109,6 +111,19 @@ export const Header: React.FC<HeaderProps> = ({
           <RotateCcw className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Reset</span>
         </button>
+
+        {/* Analyze Complexity Button */}
+        {onAnalyzeComplexity && (
+          <button
+            onClick={onAnalyzeComplexity}
+            className="p-1.5 px-3 rounded-lg border border-purple-200 dark:border-purple-900/60 bg-purple-50 dark:bg-purple-950/30 hover:bg-purple-100 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm active:scale-95"
+            title="Analyze Time & Space Complexity (AI + Static)"
+            aria-label="Analyze code complexity"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            <span className="hidden sm:inline">Analyze</span>
+          </button>
+        )}
 
         {/* Run / Stop Button */}
         {isRunning ? (

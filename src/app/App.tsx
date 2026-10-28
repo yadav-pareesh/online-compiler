@@ -19,6 +19,8 @@ export const App: React.FC = () => {
   const [output, setOutput] = useState<ConsoleOutputMessage[]>([]);
   const [error, setError] = useState<ExecutionErrorDetail | undefined>();
   const [durationMs, setDurationMs] = useState<number | undefined>();
+  // Right panel tab state ('output' | 'complexity')
+  const [rightPanelTab, setRightPanelTab] = useState<'output' | 'complexity'>('output');
 
   // Theme state
   const [isDark, setIsDark] = useState<boolean>(() => {
@@ -113,6 +115,7 @@ export const App: React.FC = () => {
         onSelectSnippet={handleSelectSnippet}
         isDark={isDark}
         onToggleTheme={() => setIsDark((prev) => !prev)}
+        onAnalyzeComplexity={() => setRightPanelTab('complexity')}
       />
 
       <WorkspaceLayout
@@ -125,6 +128,8 @@ export const App: React.FC = () => {
         durationMs={durationMs}
         onClearOutput={handleClearOutput}
         isDark={isDark}
+        activeRightTab={rightPanelTab}
+        onChangeRightTab={setRightPanelTab}
       />
 
       <Footer status={status} durationMs={durationMs} />
